@@ -75,21 +75,19 @@ def register():
     return render_template('register.html')
 
 # Route for user homepage
-@app.route('/login/main')
+@app.route('/main')
 def main():
     if 'username' in session:
         return render_template('home.html', username=session['username'])
     else:
         return redirect(url_for('login'))
-@app.route('/login/main/encode')
+@app.route('/encode')
 def encode():
     return render_template('encode.html')
 
-@app.route('/login/main/decode')
+@app.route('/decode')
 def decode():
     return render_template('decode.html')
-
-
 
 # Main execution block
 if __name__ == '__main__':
