@@ -89,6 +89,14 @@ def encode():
 def decode():
     return render_template('decode.html')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us.html')
+
 # Main execution block
 if __name__ == '__main__':
     with app.app_context():
