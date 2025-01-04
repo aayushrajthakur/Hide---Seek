@@ -36,8 +36,8 @@ def login():
         if user is not None:  
             if user.hashed_password == password:
                 session['username'] = username
-                flash('Login successful!','success')
-                return redirect(url_for('dashboard'))
+                
+                return redirect(url_for('main'))
             else:
                 flash('Invalid password!','danger')  
         else:
@@ -74,9 +74,21 @@ def register():
             return redirect(url_for('register'))
     return render_template('register.html')
 
-@app.route('/dashboard')
-def dashboard():
-    return "Welcome to the dashboard!"
+# Route for user homepage
+@app.route('/login/main')
+def main():
+    if 'username' in session:
+        return render_template('home.html', username=session['username'])
+    else:
+        return redirect(url_for('login'))
+@app.route('/login/main/encode')
+def encode():
+    return render_template('encode.html')
+
+@app.route('/login/main/decode')
+def decode():
+    return render_template('decode.html')
+
 
 
 # Main execution block
