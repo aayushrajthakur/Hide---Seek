@@ -151,7 +151,7 @@ def download_image():
         return send_file(
             encoded_filepath,
             as_attachment=True,
-            download_name='encoded_image.png',
+            # download_name='encoded_image.png',
             mimetype='image/png'
         )
     return 'No image available for download', 404
