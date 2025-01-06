@@ -206,11 +206,17 @@
             background-color: #70a1a3;
 
         }
+        img{
+            margin-top: 20px;
+            width: 100px; 
+            height: auto; 
+            
+        }
     </style>
 
 </head>
 <body>
-    <form action="/encode" method="post" enctype="multipart/form-data">
+    <form action="/decode" method="post" enctype="multipart/form-data">
         <div class="mainbd">
             <header>
                 <div class="menu">
@@ -228,7 +234,7 @@
             <main> 
                 <div class="hr1"></div>
                 <div class="dialogue">
-                    <h1 class="title">ENCODE PANEL</h1>
+                    <h1 class="title">DECODE PANEL</h1>
 
                     <div class="file-upload">
                         <label class="custom-file-upload">
@@ -238,8 +244,7 @@
                     </div>
                     
                     <div>
-                        <label for="message">Message</label>
-                        <textarea name="message" id="message" rows="4" ></textarea>
+                        <img src="{{ url_for('static', filename='decodeimg.png') }}" alt="Logo">
                     </div>
                     <div>
                         <label for="message">Password</label>
@@ -247,9 +252,9 @@
                     </div>
                     <br>
                     
-                    <p id="inst" class="desc">!!PLEASE PRESS TO ENCODE!!</p>
+                    <p id="inst" class="desc">!!PLEASE PRESS TO DECODE!!</p>
                     <div class="type">
-                        <button class="dc">ENCODE</button>
+                        <button class="dc">DECODE</button>
                     </div>
                 </div>
             </main>
