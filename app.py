@@ -28,7 +28,7 @@ class Users(db.Model):
 
 @app.route('/')
 def home():
-    return render_template('register.html')
+    return render_template('login.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,55 +92,56 @@ def main():
 @app.route('/encode', methods=['GET', 'POST'])
 def encode():
     if request.method == 'POST':
-        img = request.files['image']
+        img = request.files.get('image')
         message = request.form.get('message')
-        password = request.form.get('password')
-        
-        if img.filename == '':
-            flash('No selected file!','danger')
+        password = request.form.get('password') # Password is not used in this code but will definitely update soon.
+
+        if img is None or img.filename == '':
+            flash('No selected file!', 'danger')
             return redirect(url_for('encode'))
 
-        if img:
-            filename = secure_filename(img.filename) 
-            img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename) 
-
-            img.save(img_path) 
-            img = Image.open(img_path)  
-            encoded_img = img.copy()  
+        try:
+            filename = secure_filename(img.filename)
+            img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            img.save(img_path)
+            img = Image.open(img_path)
+            encoded_img = img.copy()
 
             width, height = img.size
-            message += '\0'  
-            message_bits = ''.join([format(ord(char), '08b') for char in message])
+            message += '\0' 
+            message_bits = ''.join(format(ord(char), '08b') for char in message)
             message_index = 0
 
             for y in range(height):
                 for x in range(width):
                     pixel = list(img.getpixel((x, y)))
-                    for n in range(3):  
+                    for n in range(3): 
                         if message_index < len(message_bits):
-                            pixel[n] = pixel[n] & ~1 | int(message_bits[message_index])
+                            pixel[n] = (pixel[n] & ~1) | int(message_bits[message_index])
                             message_index += 1
                     encoded_img.putpixel((x, y), tuple(pixel))
                     if message_index >= len(message_bits):
                         break
                 if message_index >= len(message_bits):
                     break
-            encoded_filename = f"encoded_{filename}"
-            filename = secure_filename(encoded_filename)
-            output_path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
-            encoded_img.save(output_path) 
 
-            #Encode the image to base64
-            image_01 = Image.open(output_path)
+            encoded_filename = f"encoded_{filename}"
+            encoded_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(encoded_filename))
+            encoded_img.save(encoded_path)
+
             buffered = io.BytesIO()
-            image_01.save(buffered, format="PNG")
+            encoded_img.save(buffered, format="PNG")
             encoded_image = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-            session['encoded_filepath'] = output_path
+            session['encoded_filepath'] = encoded_path
             return redirect(url_for('download_image'))
-        return 'No image uploaded', 400
-        
+
+        except Exception as e:
+            flash(f'Error occurred while processing the image: {str(e)}', 'danger')
+            return redirect(url_for('encode'))
+
     return render_template('encode.html')
+
 
 
 @app.route('/download_image', methods=['GET'])
@@ -156,8 +157,45 @@ def download_image():
     return 'No image available for download', 404
 
 
-@app.route('/decode')
+@app.route('/decode', methods=['GET', 'POST'])
 def decode():
+    if request.method == "POST":
+        img = request.files['image']
+        password = request.form.get('password')
+        if img is None or img.filename == '':
+            flash('No selected file!','danger')
+            return redirect(url_for('decode'))
+        
+        try:
+            filename = secure_filename(img.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  
+            img.save(image_path)
+            image = Image.open(image_path)
+            width, height = image.size
+            message_bits = []
+            
+            for y in range(height):
+                for x in range(width):
+                    pixel = list(image.getpixel((x, y)))
+                    for n in range(3):
+                        message_bits.append(pixel[n] & 1)
+            
+            message_bytes = [message_bits[i:i+8] for i in range(0, len(message_bits), 8)]
+            message = ''.join([chr(int(''.join(map(str, byte)), 2)) for byte in message_bytes])
+            result_message =  message.split('\0')[0]   
+
+            image_path = url_for('static', filename='uploads/' + filename)
+            return render_template('decode_message.html', message=result_message, image_path=image_path)
+        
+        except Exception as e:
+            flash('Error occured while processing the image.','danger')
+            return redirect(url_for('decode'))
+        finally:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+
+
     return render_template('decode.html')
 
 @app.route('/privacy')
