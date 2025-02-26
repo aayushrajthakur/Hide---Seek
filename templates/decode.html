@@ -1,265 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steganography</title>
-    <link rel="stylesheet" href="encode.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        *{
-            margin:0px;
-            padding:0px;
-            box-sizing: border-box;
-        }
-        .mainbd{
-            background-color: aliceblue;
-            height:100%;
-            width:100%;  
-        }
-        header{
-            height: 100px;
-            background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);
-        }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-            text-align: center;
-            color: #3d3636;
-        }
-        .file-upload {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-            font-size: 20px;
-            
-        }
-        input[type="file"] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            opacity: 0; /* Hide the default file input */
-            cursor: pointer;
-            height: 100%;
-            width: 100%;
-        }
-        .custom-file-upload {
-            display: inline-block;
-            padding: 10px 20px;
-            cursor: pointer;
-            border: 2px solid #488ba8;
-            border-radius: 4px;
-            background-color: #4299cb;
-            color: #091524;
-            transition: background-color 0.3s, border-color 0.3s;
-            text-align: center;
-            width: 100%;
-        }
-        i{
-            margin-left:10px;
-        }
-        .hr{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-        }
-        .hr1{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-            margin-bottom: 100px;
-        }
-        .hr2{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-        }
-        .t{
-            color:rgb(2, 243, 247);
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-align: center;
+{% extends 'layout.html' %}
+{% block content %}
 
-        }
-        .submenu{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .titlese {
-            color: White;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.23rem;
-            text-align: center;
-            margin-top: 12px;
-            background-color: transparent;
-            outline: none;
-            border: none;
-            cursor: pointer;
-        }
-        .titlese:hover{
-            color:rgb(2, 243, 247);
-        }
-        .menu{
-            height:50px;
-            background:linear-gradient(240deg,#141E30,#243B55);
-            
-        }
-        a{
-            text-decoration: none;
-            color:black;
-        }
-        ul li a{
-            display: block;
-            text-decoration: none;
-            color:white;
-            text-align: center;
-            font-size:1.23rem;
-            margin-top:2rem;
-        }
-        hr{
-            margin-top:2rem;
-        }
-        main{
-            height:700px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; 
-            background: linear-gradient(-13deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            animation: gradient 15s ease infinite;
-            
-        }
-        .dialogue{
-            height: 600px;
-            width: 500px;
-            background:rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 8px solid #f5efff, ;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            /* animation: animate 2s linear infinite; */
-            margin-bottom: 50px;
+{% include 'includes/header.html' %}
 
-        }
-        @keyframes animate {
-            0%{
-                border:2px solid lemonchiffon;
-            }
-            50%{
-                border:5px solid lemonchiffon;
-                box-shadow: 0 0 5px #03e9f4,
-                    0 0 25px #03e9f4,
-                    0 0 50px #03e9f4,
-                    0 0 20px #03e9f4;
-            }
-            100%{
-            border:10px solid lemonchiffon;
-            }
-        }
-        .title{
-            padding-bottom: 80px;
-            font-weight: 900;
-            color:aliceblue;
-        }
-        #inst{
-            font-weight: 500;
-            color:#2C3E50;
-        }
-        .type{
-            height: 100px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .dc{
-            height:50px;
-            background-color: aliceblue;
-            border-radius: 5px;
-            width:200px;
-            color:#2D3142;
-            font-weight: 600;
-            font-size: 1rem;
-            outline: none;
-            border: none;
-        }
-        .pswd{
-            width: 300px;
-            height: 50px;
-        }
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if not session.username %}
+            <div class="alert alert-warning mb-4">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                You need to <a href="{{ url_for('login') }}" class="alert-link">log in</a> to decode messages!
+            </div>
+            {% endif %}
+            <div class="card shadow">
 
-        footer{
-            height: 300px;
-            background:linear-gradient(240deg,#141E30,#243B55);
-        }
-        .dc:hover{
-            color:rgb(2, 243, 247);
-            background-color: #233b3c;
-        }
-        textarea{
-            width: 400px;
-            background-color: #70a1a3;
-
-        }
-        img{
-            margin-top: 20px;
-            width: 100px; 
-            height: auto; 
-            
-        }
-    </style>
-</head>
-<body>
-    <form action="/decode" method="post" enctype="multipart/form-data">
-        <div class="mainbd">
-            <header>
-                <div class="menu">
-                    <h1 class="t">Hide & Seek</h1>
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i class="fas fa-unlock-alt me-2"></i>
+                    <h3 class="mb-0">Reveal Hidden Message</h3>
                 </div>
-                <div class="hr"></div>
-                <div class="submenu">
-                    <a href="{{ url_for('main') }}" class="titlese">Home</a>
-                    <a href="{{url_for('encode')}}" class="titlese">Encode</a>
-                    <a href="{{url_for('decode')}}" class="titlese">Decode</a>
-                    <a href="{{url_for('privacy')}}" class="titlese">Privacy</a>
-                    <a href="{{url_for('about_us')}}" class="titlese">About Us</a>
-                </div>
-            </header>
-            <main> 
-                <div class="hr1"></div>
-                <div class="dialogue">
-                    <h1 class="title">DECODE PANEL</h1>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <!-- Image Upload Section -->
+                        <div class="mb-4">
+                            <label for="image" class="form-label">
+                                <i class="fas fa-image me-2"></i>Select Encoded Image
+                            </label>
+                            <input type="file" class="form-control" id="image" name="image" 
+                                   accept="image/png" required>
+                            <div class="form-text text-muted">
+                                Only PNG images with hidden messages can be decoded
+                            </div>
+                            <div id="imagePreview" class="mt-3 text-center d-none">
+                                <img src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px;">
+                            </div>
+                        </div>
 
-                    <div class="file-upload">
-                        <label class="custom-file-upload">
-                            Choose a File
-                        </label>
-                        <input type="file" name="image" id="image" accept="image/*" >
-                    </div>
-                    
-                    <div>
-                        <img src="{{ url_for('static', filename='decodeimg.png') }}" alt="Logo">
-                    </div>
-                    <div>
-                        <label for="message">Password</label>
-                        <textarea class="pswd" placeholder="Leave empty if no password" name="Password" id="password" rows="4"></textarea>
-                    </div>
-                    <br>
-                    
-                    <p id="inst" class="desc">!!PLEASE PRESS TO DECODE!!</p>
-                    <div class="type">
-                        <button class="dc">DECODE</button>
+                        <!-- Password Section -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-key me-2"></i>Password (If Required)
+                            </label>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="Enter password if the message was protected">
+                            <div class="form-text text-muted">
+                                Only required if the message was password-protected
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-unlock-alt me-2"></i>Reveal Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Instructions Card -->
+            <div class="card mt-4 shadow">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>Important Information</span>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-exclamation-circle fa-2x text-warning me-3"></i>
+                                <div>
+                                    <h5>Image Requirements</h5>
+                                    <p class="text-muted mb-0">Only PNG images encoded with our system can be decoded</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-shield-alt fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h5>Password Protection</h5>
+                                    <p class="text-muted mb-0">If the message was encrypted, you'll need the correct password</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </main>
-            <div class="hr2"></div>
-            <footer></footer>
+            </div>
         </div>
-    </form>
-</body>
-</html>
+    </div>
+</div>
+
+<script>
+document.getElementById('image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.classList.remove('d-none');
+            preview.querySelector('img').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
+{% endblock %}
