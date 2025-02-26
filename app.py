@@ -63,7 +63,6 @@ def register():
         con_password = request.form.get('con_password')
 
         existing_user = Users.query.filter_by(username=username).first()
-        print(f"Existing user: {existing_user}")
 
         if existing_user:
             flash('Username already exists!','danger')
