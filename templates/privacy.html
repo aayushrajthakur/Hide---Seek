@@ -1,161 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='about_us.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Privacy Policy Page Styles */
-        .privacy-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+{% extends 'layout.html' %}
+{% block content %}
 
-        .hero-section {
-            text-align: center;
-            padding: 6rem 0;
-            border-radius: 10px;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
+{% include 'includes/header.html' %}
 
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://wallpapercave.com/wp/wp2184316.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.3);
-            z-index: 1;
-        }
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    <h3 class="mb-0">Privacy Policy</h3>
+                </div>
+                <div class="card-body">
+                    <section class="mb-5">
+                        <h4 class="mb-3">Information We Collect</h4>
+                        <p>We collect minimal information to provide our steganography services:</p>
+                        <ul>
+                            <li>Account information (username and email)</li>
+                            <li>Uploaded images (temporarily stored)</li>
+                            <li>Messages embedded in images (not stored)</li>
+                        </ul>
+                    </section>
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+                    <section class="mb-5">
+                        <h4 class="mb-3">How We Use Your Information</h4>
+                        <p>Your information is used solely for:</p>
+                        <ul>
+                            <li>Processing your steganography requests</li>
+                            <li>Account management</li>
+                            <li>Service improvements</li>
+                        </ul>
+                    </section>
 
-        .hero-section h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
+                    <section class="mb-5">
+                        <h4 class="mb-3">Data Security</h4>
+                        <p>We take several measures to protect your data:</p>
+                        <ul>
+                            <li>Secure password hashing</li>
+                            <li>Encrypted data transmission</li>
+                            <li>Regular security updates</li>
+                            <li>Temporary file storage with automatic deletion</li>
+                        </ul>
+                    </section>
 
-        section {
-            margin-bottom: 3rem;
-        }
+                    <section class="mb-5">
+                        <h4 class="mb-3">Your Rights</h4>
+                        <p>You have the right to:</p>
+                        <ul>
+                            <li>Access your personal data</li>
+                            <li>Request data deletion</li>
+                            <li>Modify your account information</li>
+                            <li>Opt-out of communications</li>
+                        </ul>
+                    </section>
 
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
+                    <section class="mb-5">
+                        <h4 class="mb-3">Contact Us</h4>
+                        <p>If you have any questions about our privacy policy, please contact us:</p>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-envelope text-primary me-2"></i>
+                            <span>Email: privacy@steganography.com</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-phone text-primary me-2"></i>
+                            <span>Phone: +1 (555) 123-4567</span>
+                        </div>
+                    </section>
 
-        p {
-            color: #555;
-            line-height: 1.6;
-            font-size: 1.1rem;
-        }
-
-        .menu {
-            height: 50px;
-            background: linear-gradient(135deg, rgb(139, 139, 134), #E6E6FA);
-        }
-
-        .t {
-            color: rgb(2, 243, 247);
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-align: center;
-        }
-
-        header {
-            margin-bottom: 10px;
-            height: 50px;
-            background: linear-gradient(#c4d4e5, #E6E6FA);
-        }
-
-        .hr {
-            height: 2px;
-            width: 100%;
-            background: linear-gradient(-120deg, #1FA2FF, #b8d5da, #A6FFCB);
-        }
-
-        .submenu {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .titles {
-            color: rgb(58, 52, 52);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.23rem;
-            text-align: center;
-            margin-top: 12px;
-        }
-        .titles:hover{
-            color:rgb(2, 243, 247);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="menu">
-        <h1 class="t">Hide & Seek</h1>
-    </div>
-    <div class="privacy-container">
-        <header>
-            <div class="hr"></div>
-            <div class="submenu">
-                <a href="{{ url_for('main') }}" class="titles">Home</a>
-                <a href="{{url_for('encode')}}" class="titles">Encode</a>
-                <a href="{{url_for('decode')}}" class="titles">Decode</a>
-                <a href="{{url_for('privacy')}}" class="titles">Privacy</a>
-                <a href="{{url_for('about_us')}}" class="titles">About Us</a>
+                    <div class="text-muted mt-4">
+                        <small>Last updated: March 2024</small>
+                    </div>
+                </div>
             </div>
-        </header>
-        <section class="hero-section">
-            <div class="hero-background"></div>
-            <div class="hero-content">
-                <h1>Privacy Policy</h1>
-                <p class="subtitle">Your privacy is important to us</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>Introduction</h2>
-            <p>This Privacy Policy outlines how we collect, use, and protect your information when you use our services.</p>
-        </section>
-
-        <section>
-            <h2>Information We Collect</h2>
-            <p>We may collect personal information such as your name, email address, and usage data when you interact with our services.</p>
-        </section>
-
-        <section>
-            <h2>How We Use Your Information</h2>
-            <p>Your information is used to provide and improve our services, communicate with you, and comply with legal obligations.</p>
-        </section>
-
-        <section>
-            <h2>Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal information at any time. Please contact us for assistance.</p>
-        </section>
-
-        <section>
-            <h2>Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at hideandseek@gmail.com.</p>
-        </section>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
+{% endblock %}
