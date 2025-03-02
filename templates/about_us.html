@@ -1,215 +1,292 @@
-{% extends 'layout.html' %}
+{% extends "base.html" %}
+
+{% block title %}About Us - SteganoGuard{% endblock %}
+
 {% block content %}
+<!-- Hero Section -->
+<section class="about-hero section-padding">
+    <div class="container text-center py-5">
+        <h1 class="display-4 mb-3">Welcome to SteganoGuard</h1>
+        <p class="lead mb-4">Securing Your Digital Communication Through Advanced Steganography</p>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+    </div>
+</section>
 
-{% include 'includes/header.html' %}
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex align-items-center">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <h3 class="mb-0">About Us</h3>
-                </div>
-                <div class="card-body">
-                    <!-- Introduction Section -->
-                    <section class="mb-5">
-                        <h4 class="mb-3">Welcome to Steganography</h4>
-                        <p>
-                            Steganography is the art and science of hiding information in plain sight. Our platform provides 
-                            a secure and user-friendly way to embed secret messages within images, ensuring your private 
-                            communications remain confidential.
-                        </p>
-                    </section>
-
-                    <!-- Mission Section -->
-                    <section class="mb-5">
-                        <h4 class="mb-3">Our Mission</h4>
-                        <p>
-                            We are dedicated to providing accessible and secure steganography tools to everyone who values 
-                            privacy in digital communication. Our mission is to make data hiding technology simple, 
-                            efficient, and secure for all users.
-                        </p>
-                    </section>
-
-                    <!-- Features Section -->
-                    <section class="mb-5">
-                        <h4 class="mb-3">What We Offer</h4>
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-start">
-                                    <i class="fas fa-lock fa-2x text-primary me-3 mt-1"></i>
-                                    <div>
-                                        <h5>Secure Encoding</h5>
-                                        <p class="text-muted mb-0">Advanced algorithms to safely hide your messages within images</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-start">
-                                    <i class="fas fa-shield-alt fa-2x text-primary me-3 mt-1"></i>
-                                    <div>
-                                        <h5>Privacy Protection</h5>
-                                        <p class="text-muted mb-0">Your data is handled with the utmost security and privacy</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-start">
-                                    <i class="fas fa-user-shield fa-2x text-primary me-3 mt-1"></i>
-                                    <div>
-                                        <h5>User-Friendly</h5>
-                                        <p class="text-muted mb-0">Simple and intuitive interface for all users</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-start">
-                                    <i class="fas fa-image fa-2x text-primary me-3 mt-1"></i>
-                                    <div>
-                                        <h5>Image Support</h5>
-                                        <p class="text-muted mb-0">Support for various image formats and sizes</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Technologies Section -->
-                    <section class="mb-5">
-                        <h4 class="mb-3">Technologies We Use</h4>
-                        <div class="row g-4 align-items-center justify-content-center">
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" 
-                                         alt="Python" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">Python</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" 
-                                         alt="Flask" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">Flask</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" 
-                                         alt="MySQL" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">MySQL</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" 
-                                         alt="Bootstrap" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">Bootstrap</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                                         alt="HTML5" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">HTML5</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
-                                         alt="CSS3" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">CSS3</h6>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3 text-center">
-                                <div class="tech-card p-3">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
-                                         alt="JavaScript" class="img-fluid mb-2" style="height: 60px;">
-                                    <h6 class="mb-0">JavaScript</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Team Section with Photos -->
-                    <section class="mb-5">
-                        <h4 class="mb-3">Our Team</h4>
-                        <div class="row g-4 justify-content-center">
-                            <div class="col-md-5">
-                                <div class="team-member text-center">
-                                    <img src="\static\jiteshpic.png" 
-                                         alt="Team Member 1" class="img-fluid rounded-circle mb-3" 
-                                         style="width: 150px; height: 150px; object-fit: cover;">
-                                    <h5>Jitesh Sonwane</h5>
-                                    <p class="text-muted">Project Lead & Frontend Developer</p>
-                                    <div class="social-links mt-2">
-                                        <a href="#" class="text-primary mx-2"><i class="fab fa-linkedin"></i></a>
-                                        <a href="#" class="text-primary mx-2"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="team-member text-center">
-                                    <img src="\static\aayushpic.png" 
-                                         alt="Team Member 2" class="img-fluid rounded-circle mb-3" 
-                                         style="width: 150px; height: 150px; object-fit: cover;">
-                                    <h5>Aayush raj Thakur</h5>
-                                    <p class="text-muted">Backend Developer & Security Expert</p>
-                                    <div class="social-links mt-2">
-                                        <a href="#" class="text-primary mx-2"><i class="fab fa-linkedin"></i></a>
-                                        <a href="#" class="text-primary mx-2"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Contact Section -->
-                    <section>
-                        <h4 class="mb-3">Get in Touch</h4>
-                        <p>Have questions or suggestions? We'd love to hear from you!</p>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fas fa-envelope text-primary me-2"></i>
-                            <span>Email: contact@steganography.com</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fas fa-phone text-primary me-2"></i>
-                            <span>Phone: +1 (555) 123-4567</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                            <span>Location: New York, NY</span>
-                        </div>
-                    </section>
+<!-- Mission Section -->
+<section class="mission-section section-padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop" alt="Our Mission" class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-md-6">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="lead">Empowering users with secure and innovative steganography solutions.</p>
+                <p>At SteganoGuard, we believe in making data security accessible to everyone. Our platform combines cutting-edge steganography techniques with a user-friendly interface, ensuring your messages remain private and secure.</p>
+                <div class="mt-4">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section section-padding bg-light">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">Why Choose SteganoGuard?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-lock fa-3x"></i>
+                    </div>
+                    <h3>Advanced Security</h3>
+                    <p>State-of-the-art encryption algorithms ensure your messages remain confidential and secure.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user-shield fa-3x"></i>
+                    </div>
+                    <h3>User Privacy</h3>
+                    <p>Your data privacy is our top priority. We never store or share your encoded messages.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-magic fa-3x"></i>
+                    </div>
+                    <h3>Easy to Use</h3>
+                    <p>Simple and intuitive interface makes steganography accessible to everyone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section section-padding">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">Meet Our Team</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="{{ url_for('static', filename='aayushpic.png') }}" alt="developer_1 pic" class="img-fluid rounded-circle">
+                    </div>
+                    <h4>Aayush Raj Thakur</h4>
+                    <p class="text-muted">Backend Developer & Security Expert</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/aayush-patel-8b54a4223/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/aayushrajthakur"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="{{ url_for('static', filename='jiteshpic.png') }}" alt="developer_2 pic" class="img-fluid rounded-circle">
+                    </div>
+                    <h4>Jitesh Sonwane</h4>
+                    <p class="text-muted">Frontend Developer & Security Expert</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/jitesh-gosar/"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/jiteshgosar"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="https://randomuser.me/api/portraits/men/91.jpg" alt="Team Member" class="img-fluid rounded-circle">
+                    </div>
+                    <h4>Mike Johnson</h4>
+                    <p class="text-muted">UI/UX Designer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section section-padding bg-light">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">Get in Touch</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="contact-form">
+                    <form method="POST" action="{{ url_for('submit_contact') }}">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <style>
-.tech-card {
-    background: white;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
+    /* Hero Section */
+    .about-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+    }
 
-.tech-card:hover {
-    transform: translateY(-5px);
-}
+    /* Custom Divider */
+    .divider-custom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 25px 0;
+    }
 
-.team-member {
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
+    .divider-custom-line {
+        width: 100px;
+        height: 2px;
+        background-color: #fff;
+    }
 
-.team-member:hover {
-    transform: translateY(-5px);
-}
+    .divider-custom-icon {
+        margin: 0 15px;
+    }
+
+    /* Section Titles */
+    .section-title {
+        position: relative;
+        margin-bottom: 40px;
+        color: #2c3e50;
+    }
+
+    .section-title:after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #007bff;
+        margin: 15px auto 0;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .icon-wrapper {
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    /* Team Members */
+    .team-member {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+    }
+
+    .member-img {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 20px;
+        overflow: hidden;
+    }
+
+    .member-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .social-links {
+        margin-top: 15px;
+    }
+
+    .social-links a {
+        color: #007bff;
+        margin: 0 10px;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #0056b3;
+    }
+
+    /* Contact Form */
+    .contact-form {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .btn-lg {
+        padding: 12px 30px;
+    }
 </style>
-
 {% endblock %}

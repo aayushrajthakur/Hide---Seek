@@ -1,251 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steganography</title>
-    <link rel="stylesheet" href="encode.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% extends "base.html" %}
 
-    <style>
-        *{
-            margin:0px;
-            padding:0px;
-            box-sizing: border-box;
-        }
-        .mainbd{
-            background-color: aliceblue;
-            height:100%;
-            width:100%;  
-        }
-        header{
-            height: 100px;
-            background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);
-        }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-            text-align: center;
-            color: #3d3636;
-        }
-        
-        input[type="file"] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            opacity: 0; /* Hide the default file input */
-            cursor: pointer;
-            height: 100%;
-            width: 100%;
-        }
-        
-        i{
-            margin-left:10px;
-        }
-        .hr{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-        }
-        .hr1{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-            margin-bottom: 100px;
-        }
-        .hr2{
-            height:5px;
-            width:100%;
-            background:linear-gradient(240deg,#1FA2FF,#12D8FA,#A6FFCB);
-        }
-        .t{
-            color:rgb(2, 243, 247);
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-align: center;
+{% block title %}Decoded Message - Steganography App{% endblock %}
 
-        }
-        .submenu{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .titlese {
-            color: White;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.23rem;
-            text-align: center;
-            margin-top: 12px;
-            background-color: transparent;
-            outline: none;
-            border: none;
-            cursor: pointer;
-        }
-        .titlese:hover{
-            color:rgb(2, 243, 247);
-        }
-        .menu{
-            height:50px;
-            background:linear-gradient(240deg,#141E30,#243B55);
-            
-        }
-        a{
-            text-decoration: none;
-            color:black;
-        }
-        ul li a{
-            display: block;
-            text-decoration: none;
-            color:white;
-            text-align: center;
-            font-size:1.23rem;
-            margin-top:2rem;
-        }
-        hr{
-            margin-top:2rem;
-        }
-        main{
-            height:700px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; 
-            background: linear-gradient(-13deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            animation: gradient 15s ease infinite;
-            
-        }
-        .dialogue{
-            height: 600px;
-            width: 500px;
-            background:rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 8px solid #f5efff, ;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            /* animation: animate 2s linear infinite; */
-            margin-bottom: 50px;
-
-        }
-        @keyframes animate {
-            0%{
-                border:2px solid lemonchiffon;
-            }
-            50%{
-                border:5px solid lemonchiffon;
-                box-shadow: 0 0 5px #03e9f4,
-                    0 0 25px #03e9f4,
-                    0 0 50px #03e9f4,
-                    0 0 20px #03e9f4;
-            }
-            100%{
-            border:10px solid lemonchiffon;
-            }
-        }
-        .title{
-            padding-bottom: 80px;
-            font-weight: 900;
-            color:aliceblue;
-        }
-        #inst{
-            font-weight: 500;
-            color:#2C3E50;
-        }
-        .type{
-            height: 100px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .dc{
-            height:50px;
-            background-color: aliceblue;
-            border-radius: 5px;
-            width:200px;
-            color:#2D3142;
-            font-weight: 600;
-            font-size: 1rem;
-            outline: none;
-            border: none;
-        }
-        .pswd{
-            width: 300px;
-            height: 50px;
-        }
-
-        footer{
-            height: 300px;
-            background:linear-gradient(240deg,#141E30,#243B55);
-        }
-        .dc:hover{
-            color:rgb(2, 243, 247);
-            background-color: #233b3c;
-        }
-        textarea{
-            width: 400px;
-            background-color: #70a1a3;
-
-        }
-        img{
-            margin-top: 10px;
-            margin-left: 28%;
-            width: 200px; 
-            height: auto; 
-            
-        }
-        .trd{
-            margin-left: 90px;
-            font-weight: 700;
-            color:rgb(81, 233, 236);
-        }
-    </style>
-
-</head>
-<body>
-        <div class="mainbd">
-            <header>
-                <div class="menu">
-                    <h1 class="t">Hide & Seek</h1>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center mb-0">Decoded Message</h3>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <img src="{{ image_path }}" alt="Decoded Image" class="img-fluid" style="max-height: 300px;">
                 </div>
-                <div class="hr"></div>
-                <div class="submenu">
-                    <a href="{{ url_for('main') }}" class="titlese">Home</a>
-                    <a href="{{url_for('encode')}}" class="titlese">Encode</a>
-                    <a href="{{url_for('decode')}}" class="titlese">Decode</a>
-                    <a href="{{url_for('privacy')}}" class="titlese">Privacy</a>
-                    <a href="{{url_for('about_us')}}" class="titlese">About Us</a>
+                <div class="mb-3">
+                    <label class="form-label">Hidden Message:</label>
+                    <div class="border rounded p-3 bg-light">
+                        {{ message }}
+                    </div>
                 </div>
-            </header>
-            <main> 
-                <div class="hr1"></div>
-                <div class="dialogue">
-                    <h1 class="title">DECODED MESSAGE</h1>
-
-                    <div class="container mt-5">
-                        <h2 class="trd">UPLOADED IMAGE</h2>
-                        <img src="{{ image_path }}" alt="Uploaded Image" class="img-fluid">
-                        <br><br>
-                        <div class="alert alert-info">
-                            <strong>Message:</strong> {{ message }}
-                        </div>
-                        
-                    </div>                
-                    
-                    
-                    <p id="inst" class="desc">GO TO HOME PAGE !!</p>
-                    <form action="{{ url_for('main')}}" method="get">
-                        <div class="type">
-                            <button type="submit" class="dc">HOME</button>
-                        </div>
-                    </form>
+                <div class="text-center">
+                    <a href="{{ url_for('decode') }}" class="btn btn-primary">Decode Another Image</a>
                 </div>
-            </main>
-            <div class="hr2"></div>
-            <footer></footer>
+            </div>
         </div>
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}

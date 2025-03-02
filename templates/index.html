@@ -1,162 +1,329 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hide & Seek - Secure Message Steganography</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    {% include 'includes/header.html' %}
+{% extends "base.html" %}
 
-    <!-- Hero Section -->
-    <section class="hero-section gradient-background">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="hero-title">Secure Your Messages with Steganography</h1>
-                    <p class="hero-text">Hide your secret messages within images using advanced steganography techniques. Keep your communication private and secure.</p>
-                    <div class="hero-buttons">
-                        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
-                        <a href="https://ieeexplore.ieee.org/document/10704349" class="btn btn-outline-light btn-lg ms-3">Learn More</a>
-                    </div>
+{% block title %}SteganoGuard - Secure Image Steganography{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title animate-fade-in">Secure Your Messages with SteganoGuard</h1>
+                <p class="hero-text animate-fade-in">Hide confidential messages within images using advanced steganography. Military-grade security meets user-friendly design.</p>
+                <div class="hero-buttons animate-fade-in">
+                    {% if 'username' not in session %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">Get Started</a>
+                    <a href="{{ url_for('about_us') }}" class="btn btn-outline-light btn-lg">Learn More</a>
+                    {% else %}
+                    <a href="{{ url_for('encode') }}" class="btn btn-primary btn-lg me-3">Start Encoding</a>
+                    <a href="{{ url_for('decode') }}" class="btn btn-outline-light btn-lg">Decode Message</a>
+                    {% endif %}
                 </div>
-                <div class="col-lg-6">
-                    <img src="https://cyberhoot.com/wp-content/uploads/2020/03/Steganography-A-New-Cyberattack-Tool-1280x720-1-1024x576.jpg" alt="Steganography Concept" class="hero-image">
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image animate-float">
+<img src="https://img.freepik.com/premium-vector/artificial-intelligence-banner-with-outline-icons-robotics-chatbot-database-horizontal-banner_121070-885.jpg?w=360" alt="SteganoGuard" class="img-fluid">
 
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features Section -->
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2 class="section-title">Why Choose Hide & Seek?</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="{{ url_for('static', filename='logo21.png') }}" alt="Encryption">
-
-                        </div>
-                        <i class="fas fa-lock feature-icon"></i>
-                        <h3>Secure Encryption</h3>
-                        <p>Your messages are securely hidden within images using advanced steganography algorithms.</p>
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Why Choose SteganoGuard?</h2>
+            <p class="lead">Advanced security features designed for your privacy</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
+                    <h3>Military-Grade Security</h3>
+                    <p>Advanced steganography algorithms ensure your messages remain completely hidden and secure.</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="{{ url_for('static', filename='decodeimg.png') }}" alt="Image Quality">
-
-                        </div>
-                        <i class="fas fa-image feature-icon"></i>
-                        <h3>Image Preservation</h3>
-                        <p>The original image quality remains intact while hiding your secret messages.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
                     </div>
+                    <h3>Password Protection</h3>
+                    <p>Add an extra layer of security with optional password protection for your hidden messages.</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="https://st.depositphotos.com/1005920/4362/i/950/depositphotos_43629751-stock-photo-privacy-icon.jpg" alt="Privacy">
-
-                        </div>
-                        <i class="fas fa-user-shield feature-icon"></i>
-                        <h3>Privacy First</h3>
-                        <p>Your data remains private and secure with our user-friendly platform.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
                     </div>
+                    <h3>Complete Privacy</h3>
+                    <p>Your data never leaves your device - all processing is done locally for maximum privacy.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works-section">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-image">
-                        <img src="https://th.bing.com/th/id/OIP.w0VLpIwbqMnjkPTqZhleAwHaHa?rs=1&pid=ImgDetMain" alt="Upload Image">
-
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>How It Works</h2>
+            <p class="lead">Simple steps to secure your messages</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-upload"></i>
                     </div>
-                    <div class="timeline-number">1</div>
                     <h3>Upload Image</h3>
-                    <p>Select any image file as your carrier for the hidden message.</p>
+                    <p>Choose any image as your carrier file. We support various image formats including PNG and JPG.</p>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-image">
-                        <img src="https://th.bing.com/th/id/OIP.a8XFuAKYy3alyI_A9ZgKDwHaHa?rs=1&pid=ImgDetMain" alt="Enter Message">
-
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-keyboard"></i>
                     </div>
-                    <div class="timeline-number">2</div>
                     <h3>Enter Message</h3>
-                    <p>Type your secret message and set an optional password.</p>
+                    <p>Type your secret message and optionally secure it with a password for added protection.</p>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-image">
-                        <img src="{{ url_for('static', filename='decodeimg.png') }}" alt="Process">
-
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-share-alt"></i>
                     </div>
-                    <div class="timeline-number">3</div>
-                    <h3>Process</h3>
-                    <p>Our algorithm seamlessly hides your message within the image.</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-image">
-                        <img src="https://th.bing.com/th/id/R.176e3e4d0d7f42a59338c33c20c41c37?rik=Sd8XLoBaH6qMmA&riu=http%3a%2f%2fwww.siliconbeat.com%2fwp-content%2fuploads%2f2014%2f01%2fShare.jpg&ehk=Tuuig55%2f4CwJX0nOoyNi8S73skb%2fs0wmMZ%2bldt2M9So%3d&risl=&pid=ImgRaw&r=0" alt="Share">
-
-                    </div>
-                    <div class="timeline-number">4</div>
-                    <h3>Share</h3>
-                    <p>Download and share the image containing your hidden message.</p>
+                    <h3>Share Securely</h3>
+                    <p>Download your encoded image and share it securely with your intended recipient.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta-section gradient-background">
-        <div class="container text-center">
-            <h2>Ready to Get Started?</h2>
-            <p>Join Hide & Seek today and experience secure message hiding.</p>
-            <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Create Free Account</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-shield-alt"></i> Hide & Seek</h5>
-                    <p>Secure steganography solution for your private communication needs.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <ul class="footer-contact">
-                        <li><i class="fas fa-envelope"></i> support@hideandseek.com</li>
-                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
-                    </ul>
+<!-- Statistics Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label">Messages Encoded</div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Hide & Seek. All rights reserved.</p>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container text-center">
+        <h2>Ready to Secure Your Messages?</h2>
+        <p class="lead mb-4">Join thousands of users who trust SteganoGuard for their secure communication needs.</p>
+        {% if 'username' not in session %}
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Create Free Account</a>
+        {% else %}
+        <a href="{{ url_for('encode') }}" class="btn btn-primary btn-lg">Start Encoding Now</a>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    color: white;
+    padding: 120px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-text {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+/* Features Section */
+.features-section {
+    padding: 100px 0;
+    background: #f8f9fa;
+}
+
+.section-header {
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a2a6c;
+    margin-bottom: 1rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #1a2a6c;
+    margin-bottom: 20px;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.step-card {
+    text-align: center;
+    padding: 40px 30px;
+    border-radius: 15px;
+    background: #f8f9fa;
+    position: relative;
+    height: 100%;
+}
+
+.step-number {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: #1a2a6c;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.step-icon {
+    font-size: 2rem;
+    color: #1a2a6c;
+    margin: 20px 0;
+}
+
+/* Statistics Section */
+.stats-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+    color: white;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 30px;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 100px 0;
+    background: #f8f9fa;
+}
+
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding: 80px 0;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .stat-card {
+        margin-bottom: 30px;
+    }
+}
+</style>
+{% endblock %}

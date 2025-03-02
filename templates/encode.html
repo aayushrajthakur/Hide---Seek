@@ -1,126 +1,38 @@
-{% extends 'layout.html' %}
+{% extends "base.html" %}
+
+{% block title %}Encode Message - Steganography App{% endblock %}
+
 {% block content %}
-
-{% include 'includes/header.html' %}
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            {% if not session.username %}
-            <div class="alert alert-warning mb-4">
-                <i class="fas fa-exclamation-circle me-2"></i>
-                You need to <a href="{{ url_for('login') }}" class="alert-link">log in</a> to encode messages!
-            </div>
-            {% endif %}
-            <div class="card shadow">
-
-                <div class="card-header bg-primary text-white d-flex align-items-center">
-                    <i class="fas fa-lock me-2"></i>
-                    <h3 class="mb-0">Hide Your Message</h3>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                        <!-- Image Upload Section -->
-                        <div class="mb-4">
-                            <label for="image" class="form-label">
-                                <i class="fas fa-image me-2"></i>Select Image
-                            </label>
-                            <input type="file" class="form-control" id="image" name="image" 
-                                   accept="image/*" required>
-                            <div id="imagePreview" class="mt-3 text-center d-none">
-                                <img src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px;">
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h3 class="text-center mb-0">Encode Message</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Select Image</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
                             </div>
-                        </div>
-
-                        <!-- Message Input Section -->
-                        <div class="mb-4">
-                            <label for="message" class="form-label">
-                                <i class="fas fa-envelope me-2"></i>Your Secret Message
-                            </label>
-                            <textarea class="form-control" id="message" name="message" 
-                                    rows="4" required placeholder="Enter the message you want to hide..."></textarea>
-                            <div class="form-text">
-                                <span id="charCount">0</span>/1000 characters
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message to Hide</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
                             </div>
-                        </div>
-
-                        <!-- Password Section -->
-                        <div class="mb-4">
-                            <label for="password" class="form-label">
-                                <i class="fas fa-key me-2"></i>Password Protection (Optional)
-                            </label>
-                            <input type="password" class="form-control" id="password" name="password" 
-                                   placeholder="Enter a password to secure your message">
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-lock me-2"></i>Hide Message
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Instructions Card -->
-            <div class="card mt-4 shadow">
-                <div class="card-header bg-info text-white">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <span>How It Works</span>
-                </div>
-                <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password (Optional)</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
                             <div class="text-center">
-                                <i class="fas fa-image fa-2x text-primary mb-3"></i>
-                                <h5>1. Select Image</h5>
-                                <p class="text-muted">Choose any image file</p>
+                                <button type="submit" class="btn btn-primary">Encode Message</button>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-pen fa-2x text-primary mb-3"></i>
-                                <h5>2. Add Message</h5>
-                                <p class="text-muted">Write your secret message</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-download fa-2x text-primary mb-3"></i>
-                                <h5>3. Download</h5>
-                                <p class="text-muted">Get your encoded image</p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<script>
-document.getElementById('image').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById('imagePreview');
-            preview.classList.remove('d-none');
-            preview.querySelector('img').src = e.target.result;
-        }
-        reader.readAsDataURL(file);
-    }
-});
-
-document.getElementById('message').addEventListener('input', function(e) {
-    const charCount = e.target.value.length;
-    document.getElementById('charCount').textContent = charCount;
-    if (charCount > 1000) {
-        e.target.value = e.target.value.substring(0, 1000);
-        document.getElementById('charCount').textContent = '1000';
-    }
-});
-</script>
-
+</section>
 {% endblock %}

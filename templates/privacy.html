@@ -1,79 +1,120 @@
-{% extends 'layout.html' %}
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy - Steganography App{% endblock %}
+
 {% block content %}
-
-{% include 'includes/header.html' %}
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex align-items-center">
-                    <i class="fas fa-shield-alt me-2"></i>
-                    <h3 class="mb-0">Privacy Policy</h3>
+<section class="section-padding">
+    <div class="container">
+        <h1 class="text-center mb-5">Privacy Policy</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!-- Information Collection -->
+                <div class="privacy-section mb-4 p-4">
+                    <h3><i class="fas fa-database"></i> Information Collection</h3>
+                    <p>We collect minimal personal information necessary for account creation and service functionality:</p>
+                    <ul>
+                        <li>Username and email address for account management</li>
+                        <li>Encrypted passwords for secure authentication</li>
+                        <li>Temporary storage of images during encoding/decoding process</li>
+                    </ul>
                 </div>
-                <div class="card-body">
-                    <section class="mb-5">
-                        <h4 class="mb-3">Information We Collect</h4>
-                        <p>We collect minimal information to provide our steganography services:</p>
-                        <ul>
-                            <li>Account information (username and email)</li>
-                            <li>Uploaded images (temporarily stored)</li>
-                            <li>Messages embedded in images (not stored)</li>
-                        </ul>
-                    </section>
 
-                    <section class="mb-5">
-                        <h4 class="mb-3">How We Use Your Information</h4>
-                        <p>Your information is used solely for:</p>
-                        <ul>
-                            <li>Processing your steganography requests</li>
-                            <li>Account management</li>
-                            <li>Service improvements</li>
-                        </ul>
-                    </section>
+                <!-- Data Usage -->
+                <div class="privacy-section mb-4 p-4">
+                    <h3><i class="fas fa-shield-alt"></i> Data Usage and Protection</h3>
+                    <p>Your privacy and data security are our top priorities:</p>
+                    <ul>
+                        <li>All uploaded images are automatically deleted after processing</li>
+                        <li>We never store your encoded messages or decryption passwords</li>
+                        <li>Your personal information is protected using industry-standard encryption</li>
+                        <li>We do not share or sell any user data to third parties</li>
+                    </ul>
+                </div>
 
-                    <section class="mb-5">
-                        <h4 class="mb-3">Data Security</h4>
-                        <p>We take several measures to protect your data:</p>
-                        <ul>
-                            <li>Secure password hashing</li>
-                            <li>Encrypted data transmission</li>
-                            <li>Regular security updates</li>
-                            <li>Temporary file storage with automatic deletion</li>
-                        </ul>
-                    </section>
+                <!-- User Rights -->
+                <div class="privacy-section mb-4 p-4">
+                    <h3><i class="fas fa-user-shield"></i> Your Rights</h3>
+                    <p>As a user, you have the right to:</p>
+                    <ul>
+                        <li>Access your personal data</li>
+                        <li>Request deletion of your account and associated data</li>
+                        <li>Opt-out of non-essential communications</li>
+                        <li>Request a copy of your data</li>
+                    </ul>
+                </div>
 
-                    <section class="mb-5">
-                        <h4 class="mb-3">Your Rights</h4>
-                        <p>You have the right to:</p>
-                        <ul>
-                            <li>Access your personal data</li>
-                            <li>Request data deletion</li>
-                            <li>Modify your account information</li>
-                            <li>Opt-out of communications</li>
-                        </ul>
-                    </section>
+                <!-- Cookies -->
+                <div class="privacy-section mb-4 p-4">
+                    <h3><i class="fas fa-cookie-bite"></i> Cookies</h3>
+                    <p>We use essential cookies to:</p>
+                    <ul>
+                        <li>Maintain your session security</li>
+                        <li>Remember your login status</li>
+                        <li>Improve website functionality</li>
+                    </ul>
+                </div>
 
-                    <section class="mb-5">
-                        <h4 class="mb-3">Contact Us</h4>
-                        <p>If you have any questions about our privacy policy, please contact us:</p>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fas fa-envelope text-primary me-2"></i>
-                            <span>Email: privacy@steganography.com</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-phone text-primary me-2"></i>
-                            <span>Phone: +1 (555) 123-4567</span>
-                        </div>
-                    </section>
-
-                    <div class="text-muted mt-4">
-                        <small>Last updated: March 2024</small>
-                    </div>
+                <!-- Contact Information -->
+                <div class="privacy-section mb-4 p-4">
+                    <h3><i class="fas fa-envelope"></i> Contact Us</h3>
+                    <p>If you have any questions about our privacy policy or data practices, please contact us:</p>
+                    <ul>
+                        <li>Email: privacy@steganoguard.com</li>
+                        <li>Through our <a href="{{ url_for('about_us') }}">contact form</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
+<style>
+    .privacy-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .privacy-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .privacy-section h3 {
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    .privacy-section i {
+        margin-right: 10px;
+    }
+
+    .privacy-section ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+
+    .privacy-section ul li {
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .privacy-section ul li:before {
+        content: "•";
+        color: #007bff;
+        font-weight: bold;
+        position: absolute;
+        left: -15px;
+    }
+
+    .privacy-section a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .privacy-section a:hover {
+        text-decoration: underline;
+    }
+</style>
 {% endblock %}

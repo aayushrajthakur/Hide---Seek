@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Cliffard06.#@localhost/users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Cliffard06.#@localhost/users'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -129,13 +129,19 @@ def overlay_logo(target_image_path, logo_scale=0.2):
     return output_path
 
 @app.route('/encode_image')
-def encode_image(image_path, message):
+def encode_image(image_path, message, password=None):
     output_path = 'static/encoded_image/result.png'
     image = Image.open(image_path)
     encoded_image = image.copy()
     width, height = image.size
-    message += '\0'  
-    message_bits = ''.join([format(ord(char), '08b') for char in message])
+    
+    # Combine password and message if password exists
+    if password:
+        full_message = f"PASSWORD:{password}||MESSAGE:{message}\0"
+    else:
+        full_message = f"MESSAGE:{message}\0"
+        
+    message_bits = ''.join([format(ord(char), '08b') for char in full_message])
     message_index = 0
 
     for y in range(height):
@@ -175,24 +181,20 @@ def encode():
 
             filename = secure_filename(image.filename)
             img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            print(img_path)
             image.save(img_path)
 
             image_with_logo_path = overlay_logo(img_path)
-            print(image_with_logo_path)
-
-            encoded_image = encode_image(image_with_logo_path,message)
-            print(encode_image)
+            
+            # Pass the password to encode_image
+            encoded_image = encode_image(image_with_logo_path, message, password)
 
             session['encoded_filepath'] = encoded_image
 
-            print(encoded_image)
             return redirect(url_for('download_image'))
 
         except Exception as e:
             logging.error(f"Error occurred while processing the image: {str(e)}")
             flash(f'Error occurred while processing the image: {str(e)}. Please check the file format and try again.', 'danger')
-
             return redirect(url_for('encode'))
 
     return render_template('encode.html')
@@ -211,7 +213,7 @@ def download_image():
     return 'No image available for download', 404
 
 @app.route('/decoded_message')
-def decoded_image(image_path):
+def decoded_image(image_path, password=None):
     image = Image.open(image_path)
     width, height = image.size
     message_bits = []
@@ -219,13 +221,76 @@ def decoded_image(image_path):
     for y in range(height):
         for x in range(width):
             pixel = list(image.getpixel((x, y)))
-            for n in range(3):  # Iterate over RGB channels
+            for n in range(3):
                 message_bits.append(pixel[n] & 1)
     
     message_bytes = [message_bits[i:i+8] for i in range(0, len(message_bits), 8)]
-    message = ''.join([chr(int(''.join(map(str, byte)), 2)) for byte in message_bytes])
-    return message.split('\0')[0]  # Split at the null character and return the message
+    full_message = ''.join([chr(int(''.join(map(str, byte)), 2)) for byte in message_bytes])
+    full_message = full_message.split('\0')[0]  # Split at the null character
+    
+    # Check if message contains password
+    if full_message.startswith("PASSWORD:"):
+        parts = full_message.split("||")
+        stored_password = parts[0].replace("PASSWORD:", "")
+        
+        if password is None:
+            return None, "This message is password protected. Please provide a password."
+        
+        if stored_password != password:
+            return None, "Incorrect password!"
+            
+        message = parts[1].replace("MESSAGE:", "")
+        return message, None
+    else:
+        # No password protection
+        message = full_message.replace("MESSAGE:", "")
+        return message, None
 
+@app.route('/check_password_protection', methods=['POST'])
+def check_password_protection():
+    if 'username' not in session:
+        return {'error': 'Authentication required'}, 401
+        
+    if 'image' not in request.files:
+        return {'error': 'No image file'}, 400
+        
+    img = request.files['image']
+    if img.filename == '':
+        return {'error': 'No selected file'}, 400
+    
+    try:
+        filename = secure_filename(img.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        img.save(image_path)
+        
+        # Check if message is password protected without decoding it
+        image = Image.open(image_path)
+        width, height = image.size
+        message_bits = []
+        
+        # Only read enough bits to determine if password protected
+        for y in range(height):
+            for x in range(width):
+                pixel = list(image.getpixel((x, y)))
+                for n in range(3):
+                    message_bits.append(pixel[n] & 1)
+                if len(message_bits) >= 80:  # Enough bits to check "PASSWORD:" prefix
+                    break
+            if len(message_bits) >= 80:
+                break
+        
+        # Convert bits to characters
+        message_bytes = [message_bits[i:i+8] for i in range(0, len(message_bits), 8)]
+        prefix = ''.join([chr(int(''.join(map(str, byte)), 2)) for byte in message_bytes[:10]])
+        
+        os.remove(image_path)  # Clean up
+        
+        return {'requires_password': prefix.startswith('PASSWORD:')}
+        
+    except Exception as e:
+        if os.path.exists(image_path):
+            os.remove(image_path)
+        return {'error': str(e)}, 500
 
 @app.route('/decode', methods=['GET', 'POST'])
 def decode():
@@ -234,8 +299,13 @@ def decode():
         return redirect(url_for('login'))
         
     if request.method == "POST":
+        if 'check_only' in request.form:
+            # This is handled by check_password_protection endpoint
+            return '', 204
+            
         img = request.files['image']
         password = request.form.get('password')
+        
         if img is None or img.filename == '':
             flash('No selected file!','danger')
             return redirect(url_for('decode'))
@@ -245,14 +315,17 @@ def decode():
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  
             img.save(image_path)
 
-            result_msg = decoded_image(image_path)
+            result_msg, error = decoded_image(image_path, password)
+            
+            if error:
+                flash(error, 'danger')
+                return redirect(url_for('decode'))
 
             image_path = url_for('static', filename='uploads/' + filename)
             return render_template('decode_message.html', message=result_msg, image_path=image_path)
         
         except Exception as e:
             flash(f'Error occurred while decoding the image: {str(e)}. Please ensure the image is valid and try again.', 'danger')
-
             return redirect(url_for('decode'))
         finally:
             if os.path.exists(image_path):
@@ -274,6 +347,19 @@ def logout():
     flash('You have been logged out successfully.', 'success')
     return redirect(url_for('login'))
 
+@app.route('/submit_contact', methods=['POST'])
+def submit_contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        
+        # Here you can add logic to handle the contact form submission
+        # For example, send an email or store in database
+        
+        flash('Thank you for your message! We will get back to you soon.', 'success')
+        return redirect(url_for('about_us'))
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)  # Set up logging
-    app.run(debug=True)  # Start the Flask application
+    app.run(debug=True, port=8085)  # Start the Flask application with port 8080
